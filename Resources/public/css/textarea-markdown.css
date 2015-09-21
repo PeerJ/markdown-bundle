@@ -1,0 +1,42 @@
+.textarea-container .tab-pane {
+    margin-top: 10px;
+}
+
+.textarea-markdown {
+    font-family: Courier, monospace;
+    font-size: 90%;
+    line-height: 1.4;
+}
+
+.textarea-preview {
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    max-height: 100em;
+    margin-top: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #cecdcd;
+}
+
+.textarea-preview-invalid {
+    outline: 2px solid red;
+}
+
+.textarea-preview:focus {
+    outline: none;
+}
+
+.textarea-preview sub {
+    vertical-align: sub;
+}
+
+.textarea-preview sup {
+    vertical-align: super;
+}
+
+.textarea-preview h1 {
+    font-size: 110%;
+    font-weight: bold;
+}
+

@@ -1,0 +1,54 @@
+{% block markdown_widget -%}
+    {% from _self import command_button %}
+
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' form-control form-horizontal textarea-markdown')|trim}) %}
+
+    {% set singleLine = attr['data-single-line'] | default(false) %}
+
+    <div class="textarea-container">
+        <ul class="nav nav-tabs" hidden role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" href="#{{ form.vars.id }}-textarea-rich-text" role="tab" data-toggle="tab">Write</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#{{ form.vars.id }}-textarea-markdown" role="tab" data-toggle="tab">Markdown</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane" id="{{ form.vars.id }}-textarea-rich-text">
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        {% if not singleLine %}
+                            {{ command_button('bold', 'bold') }}
+                        {% endif %}
+                        {{ command_button('italic', 'italic') }}
+                    </div>
+
+                    <div class="btn-group">
+                        {{ command_button('subscript', 'subscript') }}
+                        {{ command_button('superscript', 'superscript') }}
+                    </div>
+
+                    {% if not singleLine %}
+                        <div class="btn-group">
+                            {{ command_button('insertOrderedList', 'list-ol', 'Numbered list') }}
+                            {{ command_button('insertUnorderedList', 'list-ul', 'Bulleted list') }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="textarea-preview" contenteditable="true"></div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane active" id="{{ form.vars.id }}-textarea-markdown">
+                <textarea {{ block('widget_attributes') }} title="Markdown input">{{ value }}</textarea>
+            </div>
+        </div>
+    </div>
+{%- endblock %}
+
+{% macro command_button(command, icon, title, class) %}
+    <button type="button" class="btn btn-secondary btn-sm command-button {{ class }}" data-command="{{ command }}" data-toggle="tooltip" data-placement="top" data-container="body" title="{{ title | default(command | capitalize) }}">
+        <i class="fa fa-{{ icon }}"></i></button>
+{% endmacro %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'peerjMarkdownBundle:Form:bootstrap_4_textarea_markdown.html.twig' %}
+
+{% set title = 'Markdown Form' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">{{ entity.title | markdown_inline }}</div>
+        </div>
+
+        <div class="card-block">
+            {{ entity.description | markdown_block }}
+        </div>
+    </div>
+
+    {{ form(form) }}
+
+    {% stylesheets
+    'bundles/peerjmarkdown/css/textarea-markdown.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}">{% endstylesheets %}
+
+    {% javascripts
+    'bundles/peerjmarkdown/js/jquery.textarea-markdown.js'
+    'bundles/peerjmarkdown/js/textarea-markdown.js' %}
+    <script src="{{ asset_url }}"></script>{% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,15 @@
+services:
+    peerj_markdown.markdown_converter:
+        class: peerj\MarkdownBundle\Service\MarkdownConverter
+
+    peerj_markdown.twig.markdown:
+        class: peerj\MarkdownBundle\Twig\MarkdownExtension
+        arguments:
+            - @peerj_markdown.markdown_converter
+        tags:
+            - { name: twig.extension }
+
+    peerj_markdown.form.type.markdown:
+        class: peerj\MarkdownBundle\Form\MarkdownType
+        tags:
+            - { name: form.type, alias: markdown }
