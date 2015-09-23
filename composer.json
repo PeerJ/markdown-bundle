@@ -23,7 +23,7 @@
   },
   "autoload": {
     "psr-0": {
-        "peerj\\MarkdownBundle": "src/peerj/MarkdownBundle"
+        "peerj\\MarkdownBundle": ""
     }
   }
 }
