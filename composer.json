@@ -22,8 +22,8 @@
     "phpunit/phpunit": "~4.7"
   },
   "autoload": {
-    "psr-0": {
-        "peerj\\MarkdownBundle": ""
+    "psr-4": {
+        "peerj\\MarkdownBundle\\": ""
     }
   }
 }
