@@ -2,11 +2,13 @@
 
 namespace peerj\MarkdownBundle\CommonMark;
 
-use League\CommonMark\ContextInterface;
 use League\CommonMark\Inline\Element\Text;
 use League\CommonMark\Inline\Parser\AbstractInlineParser;
 use League\CommonMark\InlineParserContext;
 
+/**
+ * Parse ~…~ as subscript
+ */
 class SubscriptParser extends AbstractInlineParser
 {
     /**
@@ -18,12 +20,11 @@ class SubscriptParser extends AbstractInlineParser
     }
 
     /**
-     * @param ContextInterface    $context
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(ContextInterface $context, InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext)
     {
         $cursor = $inlineContext->getCursor();
 
@@ -31,7 +32,7 @@ class SubscriptParser extends AbstractInlineParser
         if ($m = $cursor->match('/^\~([^\~]+)\~/')) {
             $text = substr($m, 1, -1);
             $inline = new Subscript([new Text($text)]);
-            $inlineContext->getInlines()->add($inline);
+            $inlineContext->getContainer()->appendChild($inline);
 
             return true;
         }

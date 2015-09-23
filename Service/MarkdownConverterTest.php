@@ -1,13 +1,11 @@
 <?php
-/**
- *
- */
 
 namespace peerj\MarkdownBundle\Service;
 
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-
-class MarkdownConverterTest extends KernelTestCase
+/**
+ * Test Markdown conversion to HTML
+ */
+class MarkdownConverterTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var MarkdownConverter
@@ -16,9 +14,7 @@ class MarkdownConverterTest extends KernelTestCase
 
     public function setUp()
     {
-        self::bootKernel();
-
-        $this->converter = static::$kernel->getContainer()->get('peerj_markdown.markdown_converter');
+        $this->converter = new MarkdownConverter();
     }
 
     /**
@@ -27,14 +23,14 @@ class MarkdownConverterTest extends KernelTestCase
     public function testRenderBlock()
     {
         $input = <<<END
-This is a paragraph.
+This is a^2^ paragraph.
 
-This is **another** paragraph.
+This ~is~ **another** paragraph.
 END;
 
         $expected = <<<END
-<p>This is a paragraph.</p>
-<p>This is <strong>another</strong> paragraph.</p>
+<p>This is a<sup>2</sup> paragraph.</p>
+<p>This <sub>is</sub> <strong>another</strong> paragraph.</p>
 
 END;
 
