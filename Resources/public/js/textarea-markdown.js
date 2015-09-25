@@ -1,5 +1,5 @@
 $(function() {
 	'use strict';
 
-	$('textarea.markdown').markdown();
+	$('.textarea-markdown').markdown();
 });

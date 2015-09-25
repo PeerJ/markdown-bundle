@@ -14,17 +14,17 @@ class SuperscriptRenderer implements InlineRendererInterface
 {
     /**
      * @param AbstractInline           $inline
-     * @param ElementRendererInterface $elementRenderer
+     * @param ElementRendererInterface $htmlRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $elementRenderer)
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Superscript)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        $content = $elementRenderer->renderInlines($inline->children());
+        $content = $htmlRenderer->renderInlines($inline->children());
 
         return new HtmlElement('sup', [], $content);
     }

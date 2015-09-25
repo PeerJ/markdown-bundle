@@ -22,10 +22,12 @@ class CommonMarkPlusConverter extends Converter
         $environment = Environment::createCommonMarkEnvironment();
 
         $environment->addInlineParser(new SuperscriptParser());
-        $environment->addInlineParser(new SubscriptParser());
+        $environment->addInlineProcessor(new SuperscriptProcessor());
+        $environment->addInlineRenderer(Superscript::class, new SuperscriptRenderer());
 
-        $environment->addInlineRenderer('peerj\MarkdownBundle\CommonMark\Superscript', new SuperscriptRenderer());
-        $environment->addInlineRenderer('peerj\MarkdownBundle\CommonMark\Subscript', new SubscriptRenderer());
+        $environment->addInlineParser(new SubscriptParser());
+        $environment->addInlineProcessor(new SubscriptProcessor());
+        $environment->addInlineRenderer(Subscript::class, new SubscriptRenderer());
 
         $environment->mergeConfig($config);
         parent::__construct(new DocParser($environment), new HtmlRenderer($environment));

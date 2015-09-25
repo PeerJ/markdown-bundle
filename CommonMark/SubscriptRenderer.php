@@ -13,18 +13,18 @@ use League\CommonMark\Inline\Renderer\InlineRendererInterface;
 class SubscriptRenderer implements InlineRendererInterface
 {
     /**
-     * @param AbstractInline           $inline
+     * @param AbstractInline|Subscript $inline
      * @param ElementRendererInterface $elementRenderer
      *
      * @return HtmlElement
      */
-    public function render(AbstractInline $inline, ElementRendererInterface $elementRenderer)
+    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
     {
         if (!($inline instanceof Subscript)) {
             throw new \InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
         }
 
-        $content = $elementRenderer->renderInlines($inline->children());
+        $content = $htmlRenderer->renderInlines($inline->children());
 
         return new HtmlElement('sub', [], $content);
     }
