@@ -2,10 +2,10 @@
   "name": "markdown-bundle",
   "private": true,
   "dependencies": {
-    "markdown-it": "~4.4.0",
-    "markdown-it-sanitizer": "~0.3.2",
-    "markdown-it-sub": "~1.0.0",
-    "markdown-it-sup": "~1.0.0",
-    "to-markdown": "~1.2.1"
+    "markdown-it": "~4.4",
+    "markdown-it-sanitizer": "~0.3",
+    "markdown-it-sub": "~1.0",
+    "markdown-it-sup": "~1.0",
+    "to-markdown": "~1.2"
   }
 }

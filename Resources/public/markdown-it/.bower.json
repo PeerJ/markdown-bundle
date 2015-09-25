@@ -33,6 +33,6 @@
     "commit": "4401922b2e08e1e4379ea474f0f9a695c429ec13"
   },
   "_source": "git://github.com/markdown-it/markdown-it.git",
-  "_target": "~4.4.0",
+  "_target": "~4.4",
   "_originalSource": "markdown-it"
 }

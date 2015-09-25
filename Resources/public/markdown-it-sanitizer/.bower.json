@@ -32,6 +32,6 @@
     "commit": "7cb23573a2f4a4d4e10e9d550102703838321506"
   },
   "_source": "git://github.com/svbergerem/markdown-it-sanitizer.git",
-  "_target": "~0.3.2",
+  "_target": "~0.3",
   "_originalSource": "markdown-it-sanitizer"
 }
