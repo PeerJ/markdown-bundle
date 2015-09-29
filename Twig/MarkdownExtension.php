@@ -34,7 +34,7 @@ class MarkdownExtension extends \Twig_Extension
                 $this->markdownConverter,
                 'renderBlock'
             ], [
-                'pre_escape' => 'html',
+                //'pre_escape' => 'html',
                 'is_safe' => ['html']
             ]),
 
@@ -42,7 +42,7 @@ class MarkdownExtension extends \Twig_Extension
                 $this->markdownConverter,
                 'renderInline'
             ], [
-                'pre_escape' => 'html',
+                //'pre_escape' => 'html',
                 'is_safe' => ['html']
             ]),
         ];
