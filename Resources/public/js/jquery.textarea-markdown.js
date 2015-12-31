@@ -113,8 +113,16 @@
 
             parent.find('.command-button').on('click', function() {
                 var command = $(this).data('command');
+                var argument = null;
 
-                document.execCommand(command, false, null);
+                var parts = command.split(/_/);
+
+                if (parts.length > 1) {
+                    command = parts[0];
+                    argument = parts[1];
+                }
+
+                document.execCommand(command, false, argument);
             });
 
             // tooltips
