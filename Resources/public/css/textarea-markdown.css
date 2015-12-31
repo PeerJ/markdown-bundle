@@ -40,3 +40,12 @@
     font-weight: bold;
 }
 
+.textarea-preview blockquote {
+    padding: 0.5em;
+    background-color: #eee;
+    border-left: 2px solid #f0ad4e;
+}
+
+.textarea-preview blockquote p:last-child {
+    margin-bottom: 0;
+}
