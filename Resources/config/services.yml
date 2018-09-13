@@ -5,7 +5,7 @@ services:
     peerj_markdown.twig.markdown:
         class: peerj\MarkdownBundle\Twig\MarkdownExtension
         arguments:
-            - @peerj_markdown.markdown_converter
+            - '@peerj_markdown.markdown_converter'
         tags:
             - { name: twig.extension }
 
