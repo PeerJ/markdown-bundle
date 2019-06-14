@@ -77,7 +77,7 @@
                     markdown,
                     actualEvent = (event.originalEvent || event);
 
-                html = actualEvent.clipboardData.getData('text/html') || window.prompt('Paste something..');
+                html = actualEvent.clipboardData.getData('text/html') || actualEvent.clipboardData.getData('text/plain') || window.prompt('Paste something..');
 
                 // TODO: use CSS styles
 
