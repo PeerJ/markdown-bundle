@@ -32,7 +32,7 @@
     "chai": "^2.2.0",
     "commonmark": "~0.18.1",
     "coveralls": "~2.11.2",
-    "eslint": "0.13.0",
+    "eslint": "6.6.0",
     "eslint-plugin-nodeca": "^1.0.0",
     "istanbul": "*",
     "jade": "~1.9.2",
