@@ -5,6 +5,7 @@ namespace peerj\MarkdownBundle\CommonMark;
 use League\CommonMark\Converter;
 use League\CommonMark\DocParser;
 use League\CommonMark\Environment;
+use League\CommonMark\Extension\ExternalLink\ExternalLinkExtension;
 use League\CommonMark\HtmlRenderer;
 
 /**
@@ -20,6 +21,17 @@ class CommonMarkPlusConverter extends Converter
     public function __construct(array $config = [])
     {
         $environment = Environment::createCommonMarkEnvironment();
+
+        $environment->addExtension(new ExternalLinkExtension());
+
+        $config['external_link'] = [
+            'internal_hosts' => ['peerj.com','staging.peerj.com', 'testing.peerj.com', 'localhost'],
+            'open_in_new_window' => true,
+            'html_class' => 'external-link',
+            'nofollow' => 'external',
+            'noopener' => 'external',
+            'noreferrer' => 'external',
+        ];
 
         $environment->addInlineParser(new SuperscriptParser());
         $environment->addInlineProcessor(new SuperscriptProcessor());
