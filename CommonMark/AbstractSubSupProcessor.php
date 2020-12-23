@@ -3,27 +3,64 @@
 namespace peerj\MarkdownBundle\CommonMark;
 
 use League\CommonMark\Delimiter\Delimiter;
+use League\CommonMark\Delimiter\DelimiterInterface;
 use League\CommonMark\Delimiter\DelimiterStack;
-use League\CommonMark\Inline\Element\AbstractInlineContainer;
+use League\CommonMark\Delimiter\Processor\DelimiterProcessorInterface;
+use League\CommonMark\Inline\Element\AbstractStringContainer;
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Inline\Processor\InlineProcessorInterface;
 
 /**
  *
  */
-abstract class AbstractSubSupProcessor implements InlineProcessorInterface
+abstract class AbstractSubSupProcessor implements DelimiterProcessorInterface
 {
     /**
-     * @return array
+     * Determine how many (if any) of the delimiter characters should be used.
+     *
+     * This allows implementations to decide how many characters to be used
+     * based on the properties of the delimiter runs. An implementation can also
+     * return 0 when it doesn't want to allow this particular combination of
+     * delimiter runs.
+     *
+     * @param DelimiterInterface $opener The opening delimiter run
+     * @param DelimiterInterface $closer The closing delimiter run
+     *
+     * @return int
      */
-    abstract protected function getCharacters();
+    public function getDelimiterUse(DelimiterInterface $opener, DelimiterInterface $closer): int
+    {
+        return 1;
+    }
 
     /**
-     * @return AbstractInlineContainer
+     * Process the matched delimiters, e.g. by wrapping the nodes between opener
+     * and closer in a new node, or appending a new node after the opener.
+     *
+     * Note that removal of the delimiter from the delimiter nodes and detaching
+     * them is done by the caller.
+     *
+     * @param AbstractStringContainer $opener       The node that contained the opening delimiter
+     * @param AbstractStringContainer $closer       The node that contained the closing delimiter
+     * @param int                     $delimiterUse The number of delimiters that were used
+     *
+     * @return void
      */
-    abstract protected function createElement();
+    public function process(AbstractStringContainer $opener, AbstractStringContainer $closer, int $delimiterUse)
+    {
+        $el = $this->createElement();
+
+        $next = $opener->next();
+        while ($next !== null && $next !== $closer) {
+            $tmp = $next->next();
+            $el->appendChild($next);
+            $next = $tmp;
+        }
+
+        $opener->insertAfter($el);
+    }
 
     /**
+     * @deprecated
      * @param DelimiterStack $delimiterStack
      * @param Delimiter      $stackBottom
      *

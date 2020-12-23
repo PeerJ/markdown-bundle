@@ -8,11 +8,27 @@ namespace peerj\MarkdownBundle\CommonMark;
 class SuperscriptProcessor extends AbstractSubSupProcessor
 {
     /**
-     * @return array
+     * @return string
      */
-    protected function getCharacters()
+    public function getOpeningCharacter() : string
     {
-        return ['^'];
+        return '^';
+    }
+
+    /**
+     * @return string
+     */
+    public function getClosingCharacter() : string
+    {
+        return '^';
+    }
+
+    /**
+     * @return int
+     */
+    function getMinLength(): int
+    {
+        return 1;
     }
 
     /**

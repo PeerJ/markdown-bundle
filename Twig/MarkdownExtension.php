@@ -38,9 +38,34 @@ class MarkdownExtension extends \Twig_Extension
                 'is_safe' => ['html']
             ]),
 
+
+            new \Twig_SimpleFilter('markdown_basic_block', [
+                $this->markdownConverter,
+                'renderBasicBlock'
+            ], [
+                //'pre_escape' => 'html',
+                'is_safe' => ['html']
+            ]),
+
             new \Twig_SimpleFilter('markdown_inline', [
                 $this->markdownConverter,
                 'renderInline'
+            ], [
+                //'pre_escape' => 'html',
+                'is_safe' => ['html']
+            ]),
+
+            new \Twig_SimpleFilter('markdown_title', [
+                $this->markdownConverter,
+                'renderTitle'
+            ], [
+                //'pre_escape' => 'html',
+                'is_safe' => ['html']
+            ]),
+
+            new \Twig_SimpleFilter('markdown_to_text', [
+                $this->markdownConverter,
+                'renderText'
             ], [
                 //'pre_escape' => 'html',
                 'is_safe' => ['html']

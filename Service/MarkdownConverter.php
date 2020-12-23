@@ -21,17 +21,18 @@ class MarkdownConverter
      */
     private $purifier;
 
-    /**
-     * @var array
-     */
-    private $allowed = [
+    private $allowedBlock = [
+        //'input[checkbox]',
         'a[href]',
         'b',
         'strong',
         'i',
         'em',
+        'del',
         'sup',
         'sub',
+        'code',
+        'pre',
         'blockquote',
         'p',
         'br',
@@ -41,8 +42,6 @@ class MarkdownConverter
         'ol',
         'ul',
         'li',
-        'pre',
-        'code',
         'img[alt|src]',
         'table[summary]',
         'tbody',
@@ -51,7 +50,32 @@ class MarkdownConverter
         'th[abbr]',
         'thead',
         'tr',
+    ];
 
+    /**
+     * @var array
+     */
+    private $allowedTitle = [
+        'i',
+        'em',
+        'del',
+        'sup',
+        'sub',
+    ];
+
+    /**
+     * @var array
+     */
+    private $allowedInline = [
+        'a[href]',
+        'b',
+        'strong',
+        'i',
+        'em',
+        'del',
+        'sup',
+        'sub',
+        'code',
     ];
 
     /**
@@ -60,12 +84,19 @@ class MarkdownConverter
     public function __construct()
     {
         $this->converter = new CommonMarkPlusConverter();
+    }
 
+    private function setPurifier($allowed = null)
+    {
         $config = HTMLPurifier_Config::createDefault();
         $config->set('HTML.Doctype', 'HTML 4.01 Strict');
         $config->set('Core.LexerImpl', 'DirectLex');
-        $config->set('HTML.Allowed', implode(',', $this->allowed));
 
+        if (!$allowed) {
+            $allowed = $this->allowedBlock;
+        }
+
+        $config->set('HTML.Allowed', implode(',', $allowed));
         $this->purifier = new HTMLPurifier($config);
     }
 
@@ -74,12 +105,34 @@ class MarkdownConverter
      *
      * @return string
      */
-    public function renderBlock($markdown)
+    public function renderBlock($markdown, $allowed = null)
     {
         $markdown = trim($markdown);
 
         $html = $this->converter->convertToHtml($markdown);
 
+        $this->setPurifier();
+        $html = $this->purifier->purify($html);
+
+        return trim($html);
+    }
+
+    /**
+     * Basic block rendering. Allows line breaks, basic formatting, and some code, but not much else.
+     * @param string $markdown CommonMark input
+     *
+     * @return string
+     */
+    public function renderBasicBlock($markdown, $allowed = null)
+    {
+        $markdown = trim($markdown);
+
+        $html = $this->converter->convertToHtml($markdown);
+
+        $allowed = $this->allowedInline;
+        $allowed[] = 'p';
+
+        $this->setPurifier($allowed);
         $html = $this->purifier->purify($html);
 
         return trim($html);
@@ -95,9 +148,44 @@ class MarkdownConverter
     public function renderInline($markdown)
     {
         $markdown = trim(str_replace("\n", ' ', $markdown));
+        $html = $this->converter->convertToHtml($markdown);
+        $this->setPurifier($this->allowedInline);
+        $html = $this->purifier->purify($html);
 
-        $html = $this->renderBlock($markdown);
+        return trim($html);
+    }
 
-        return substr($html, 3, -4);
+    /**
+     * Remove newlines, render to HTML
+     *
+     * @param string $markdown CommonMark input
+     *
+     * @return string
+     */
+    public function renderTitle($markdown)
+    {
+        $markdown = trim(str_replace("\n", ' ', $markdown));
+        $html = $this->converter->convertToHtml($markdown);
+        $this->setPurifier($this->allowedTitle);
+        $html = $this->purifier->purify($html);
+
+        return trim($html);
+    }
+
+    /**
+     * Removes all formatting, returning just text
+     *
+     * @param string $markdown CommonMark input
+     *
+     * @return string
+     */
+    public function renderText($markdown)
+    {
+        $markdown = trim(str_replace("\n", ' ', $markdown));
+        $html = $this->converter->convertToHtml($markdown);
+        $this->setPurifier([]);
+        $html = $this->purifier->purify($html);
+
+        return trim($html);
     }
 }
