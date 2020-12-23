@@ -4,25 +4,29 @@ namespace peerj\MarkdownBundle\CommonMark;
 
 use League\CommonMark\Delimiter\Delimiter;
 use League\CommonMark\Inline\Element\Text;
-use League\CommonMark\Inline\Parser\AbstractInlineParser;
+use League\CommonMark\Inline\Parser\InlineParserInterface;
 use League\CommonMark\InlineParserContext;
 use League\CommonMark\Util\RegexHelper;
 
 /**
  *
  */
-abstract class AbstractSubSupInlineParser extends AbstractInlineParser
+abstract class AbstractSubSupInlineParser implements InlineParserInterface
 {
     /**
      * @param InlineParserContext $inlineContext
      *
      * @return bool
      */
-    public function parse(InlineParserContext $inlineContext)
+    public function parse(InlineParserContext $inlineContext): bool
     {
         $cursor = $inlineContext->getCursor();
         $character = $cursor->getCharacter();
 
+        if ($character == '~') {
+            return false;
+        }
+        
         $charBefore = $cursor->peek(-1);
         if ($charBefore === null) {
             $charBefore = "\n";

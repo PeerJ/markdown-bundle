@@ -10,7 +10,7 @@ class SubscriptParser extends AbstractSubSupInlineParser
     /**
      * @return array
      */
-    public function getCharacters()
+    public function getCharacters(): array
     {
         return ['~'];
     }
