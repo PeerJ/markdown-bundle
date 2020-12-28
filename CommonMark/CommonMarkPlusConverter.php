@@ -8,7 +8,6 @@ use League\CommonMark\Environment;
 use League\CommonMark\Extension\GithubFlavoredMarkdownExtension;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalink;
 use League\CommonMark\Extension\HeadingPermalink\HeadingPermalinkExtension;
-use League\CommonMark\Normalizer\TextNormalizerInterface;
 use League\CommonMark\HtmlRenderer;
 use peerj\MarkdownBundle\CommonMark\ExternalLink\ExternalLinkExtension;
 use peerj\MarkdownBundle\CommonMark\HeadingPermalink\HeadingPermalinkRenderer;
